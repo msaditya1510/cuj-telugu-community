@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin – Pending Users</title>
+</head>
+<body>
+
+<h2>Pending User Approvals</h2>
+
+<div>
+    <button onclick="prevPage()">Prev</button>
+    <span id="pageInfo"></span>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+<br>
+
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>User Type</th>
+            <th>Approved by</th>
+            <th>Approved at</th>
+            <th>Approve</th>
+            <th>Reject</th>
+        </tr>
+    </thead>
+    <tbody id="usersTable"></tbody>
+</table>
+
+<script>
+let currentPage = 0;
+const pageSize = 5;
+
+function loadUsers() {
+    fetch(`/api/admin/users/pending?page=${currentPage}&size=${pageSize}`)
+        .then(res => {
+            if (!res.ok) throw new Error("Unauthorized or error");
+            return res.json();
+        })
+        .then(data => {
+            renderTable(data.content);
+            document.getElementById("pageInfo").innerText =
+                `Page ${data.number + 1} of ${data.totalPages}`;
+        })
+        .catch(err => alert(err.message));
+}
+
+function renderTable(users) {
+    const table = document.getElementById("usersTable");
+    table.innerHTML = "";
+
+    users.forEach(u => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${u.id}</td>
+            <td>${u.name}</td>
+            <td>${u.department}</td>
+            <td>${u.userType}</td>        
+            <td>${u.approvedBy}</td>        
+            <td>${u.approvedAt}</td>        
+            <td><button onclick="approve(${u.id})">Approve</button></td>
+            <td><button onclick="reject(${u.id})">Reject</button></td>
+        `;
+        table.appendChild(row);
+    });
+}
+
+function approve(id) {
+    fetch(`/api/admin/users/${id}/approve`, { method: "PATCH" })
+        .then(() => loadUsers());
+}
+
+function reject(id) {
+    fetch(`/api/admin/users/${id}/reject`, { method: "PATCH" })
+        .then(() => loadUsers());
+}
+
+function nextPage() {
+    currentPage++;
+    loadUsers();
+}
+
+function prevPage() {
+    if (currentPage > 0) {
+        currentPage--;
+        loadUsers();
+    }
+}
+
+loadUsers();
+</script>
+
+</body>
+</html>

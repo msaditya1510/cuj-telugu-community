@@ -1,0 +1,14 @@
+package com.telugu.cuj;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@SpringBootApplication
+public class CujTeluguApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CujTeluguApplication.class, args);
+	}
+
+}
