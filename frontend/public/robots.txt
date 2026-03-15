@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cuj-telugu-community.vercel.app/sitemap.xml
