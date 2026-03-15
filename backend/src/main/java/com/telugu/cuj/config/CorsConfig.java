@@ -19,7 +19,8 @@ public class CorsConfig {
                 registry.addMapping("/**")
 
                         // allow frontend
-                        .allowedOriginPatterns("http://localhost:5173")
+                        .allowedOriginPatterns("http://localhost:5173",
+                         "https://cuj-telugu-community.vercel.app")
 
                         // allowed HTTP methods
                         .allowedMethods("GET","POST","PUT","DELETE","PATCH","OPTIONS")
