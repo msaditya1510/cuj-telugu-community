@@ -269,9 +269,9 @@ return(
 
 <Layout>
 
-<div className="min-h-screen flex justify-center items-center p-6">
+<div className="min-h-screen flex justify-center items-start p-4 md:p-6 pt-10">
 
-<Card className="w-full max-w-2xl p-10 space-y-8 bg-white shadow-xl border rounded-2xl">
+<Card className="w-full max-w-2xl p-6 md:p-10 space-y-8 bg-white shadow-xl border rounded-2xl">
 
 <div className="space-y-2">
 
@@ -362,7 +362,7 @@ Your account has been submitted for admin approval.
 
 )}
 
-<div className="flex gap-4">
+<div className="flex flex-col md:flex-row gap-4 mt-6">
 
 {step===2 && <Button variant="outline" onClick={handleBack} className="w-full">
 Back </Button>
