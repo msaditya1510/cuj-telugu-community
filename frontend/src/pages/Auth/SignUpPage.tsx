@@ -247,44 +247,17 @@ setLoading(false)
 function handleNext(){
 
 if(step===1){
-
-const errors=validateRegistration({...formData,role:"TEMP"})
-
-setFieldErrors(errors)
-
-const first=Object.keys(errors)[0]
-
-if(first){
-toast.error(errors[first])
-scrollToField(first)
-return
-}
-
+if(!validateStep1()) return
 setStep(2)
 return
-
 }
 
 if(step===2){
-
-const errors=validateRegistration(formData)
-
-setFieldErrors(errors)
-
-const first=Object.keys(errors)[0]
-
-if(first){
-toast.error(errors[first])
-scrollToField(first)
-return
-}
-
+if(!validateStep2()) return
 submitRegistration()
-
 }
 
 }
-
 
 function handleBack(){
 if(step===2) setStep(1)
