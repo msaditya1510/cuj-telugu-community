@@ -52,7 +52,7 @@ placeholder="Java, React, ML"
 </div>
 
 <div>
-<Label className="text-sm font-semibold">Achievements <span className="text-red-500">*</span></Label>
+<Label className="text-sm font-semibold">Achievements</Label>
 <Textarea id="studentAchievements"
 value={formData.studentAchievements}
 onChange={(e)=>handleFieldChange("studentAchievements",e.target.value)}

@@ -47,7 +47,7 @@ onChange={(e)=>handleFieldChange("currentLocation",e.target.value)}
 </div>
 
 <div>
-<Label className="text-sm font-semibold">Achievements <span className="text-red-500">*</span></Label>
+<Label className="text-sm font-semibold">Achievements</Label>
 <Textarea id="alumniAchievements"
 value={formData.alumniAchievements}
 onChange={(e)=>handleFieldChange("alumniAchievements",e.target.value)}
