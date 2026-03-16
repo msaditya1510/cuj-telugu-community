@@ -14,8 +14,9 @@ type Step = 1 | 2 | 3
 const API_BASE = import.meta.env.VITE_API_URL
 
 export default function SignUpPage(){
-    useEffect(()=>{
-document.title="Sign Up Page | CUJ Telugu Community"
+
+useEffect(()=>{
+document.title="Sign Up | CUJ Telugu Community"
 },[])
 
 const [step,setStep] = useState<Step>(1)
@@ -141,7 +142,6 @@ if(!formData.designation.trim()) errors.designation="Designation required"
 if(!formData.qualifications.trim()) errors.qualifications="Qualifications required"
 if(!formData.specialization.trim()) errors.specialization="Specialization required"
 if(!formData.experience.trim()) errors.experience="Experience required"
-
 }
 
 setFieldErrors(errors)
@@ -204,7 +204,6 @@ researchInterests:formData.researchInterests
 }
 
 const form=new FormData()
-
 form.append("userData",JSON.stringify(payload))
 
 if(photo){
@@ -216,14 +215,26 @@ method:"POST",
 body:form
 })
 
-if(!res.ok) throw new Error()
+if(!res.ok){
 
-toast.success("Registration submitted")
+let message="Registration failed"
+
+try{
+const data = await res.json()
+if(data.message) message=data.message
+if(data.error) message=data.error
+}catch{}
+
+throw new Error(message)
+
+}
+
+toast.success("Registration submitted successfully")
 setStep(3)
 
-}catch(err){
+}catch(err:any){
 
-toast.error("Registration failed")
+toast.error(err.message || "Registration failed")
 
 }finally{
 
@@ -236,23 +247,51 @@ setLoading(false)
 function handleNext(){
 
 if(step===1){
-if(!validateStep1()) return
-setStep(2)
+
+const errors=validateRegistration({...formData,role:"TEMP"})
+
+setFieldErrors(errors)
+
+const first=Object.keys(errors)[0]
+
+if(first){
+toast.error(errors[first])
+scrollToField(first)
 return
 }
 
+setStep(2)
+return
+
+}
+
 if(step===2){
-if(!validateStep2()) return
+
+const errors=validateRegistration(formData)
+
+setFieldErrors(errors)
+
+const first=Object.keys(errors)[0]
+
+if(first){
+toast.error(errors[first])
+scrollToField(first)
+return
+}
+
 submitRegistration()
+
 }
 
 }
+
 
 function handleBack(){
 if(step===2) setStep(1)
 }
 
 const progress = step === 1 ? 33 : step === 2 ? 66 : 100
+
 return(
 
 <Layout>
@@ -261,7 +300,17 @@ return(
 
 <Card className="w-full max-w-2xl p-10 space-y-8 bg-white shadow-xl border rounded-2xl">
 
-{/* Stripe style progress */}
+<div className="space-y-2">
+
+<h1 className="text-3xl font-bold">
+Join CUJ Telugu Community
+</h1>
+
+<p className="text-sm text-muted-foreground">
+Fill the details below to create your account. Fields marked with * are required.
+</p>
+
+</div>
 
 <div className="flex justify-between text-sm">
 
@@ -270,6 +319,7 @@ return(
 <div className={step===3 ? "font-bold" : ""}>Done</div>
 
 </div>
+
 <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
 
 <div
@@ -279,12 +329,7 @@ style={{ width: `${progress}%` }}
 
 </div>
 
-<h1 className="text-3xl font-bold">
-Create Account
-</h1>
-
-{step===1 && (
-<StepPersonal
+{step===1 && ( <StepPersonal
 formData={formData}
 fieldErrors={fieldErrors}
 handleFieldChange={handleFieldChange}
@@ -296,15 +341,16 @@ setPhoto={setPhoto}
 
 <div className="space-y-6">
 
-<label>
-Role <span className="text-red-500">*</span>
-</label>
+<p className="text-sm text-muted-foreground">
+Select your role in the community.
+</p>
 
 <select
 id="role"
 value={formData.role}
 onChange={(e)=>handleFieldChange("role",e.target.value)}
 className="border rounded p-2 w-full"
+
 >
 
 <option value="">Select role</option>
@@ -314,16 +360,13 @@ className="border rounded p-2 w-full"
 
 </select>
 
-{formData.role==="STUDENT" &&
-<StepStudent formData={formData} handleFieldChange={handleFieldChange}/>
+{formData.role==="STUDENT" && <StepStudent formData={formData} handleFieldChange={handleFieldChange}/>
 }
 
-{formData.role==="ALUMNI" &&
-<StepAlumni formData={formData} handleFieldChange={handleFieldChange}/>
+{formData.role==="ALUMNI" && <StepAlumni formData={formData} handleFieldChange={handleFieldChange}/>
 }
 
-{formData.role==="PROFESSOR" &&
-<StepProfessor formData={formData} handleFieldChange={handleFieldChange}/>
+{formData.role==="PROFESSOR" && <StepProfessor formData={formData} handleFieldChange={handleFieldChange}/>
 }
 
 </div>
@@ -339,7 +382,7 @@ Registration Successful
 </h2>
 
 <p>
-Your registration has been submitted for admin approval.
+Your account has been submitted for admin approval.
 </p>
 
 </div>
@@ -348,16 +391,12 @@ Your registration has been submitted for admin approval.
 
 <div className="flex gap-4">
 
-{step===2 &&
-<Button variant="outline" onClick={handleBack} className="w-full">
-Back
-</Button>
+{step===2 && <Button variant="outline" onClick={handleBack} className="w-full">
+Back </Button>
 }
 
-{step<3 &&
-<Button onClick={handleNext} disabled={loading} className="w-full">
-{loading ? "Submitting..." : step===2 ? "Submit" : "Next"}
-</Button>
+{step<3 && <Button onClick={handleNext} disabled={loading} className="w-full">
+{loading ? "Submitting..." : step===2 ? "Submit" : "Next"} </Button>
 }
 
 </div>
