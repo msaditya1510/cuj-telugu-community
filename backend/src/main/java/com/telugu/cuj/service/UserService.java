@@ -196,6 +196,15 @@ public class UserService {
 	 * method used to check if the given username is free to use or not
 	 * */
 	public boolean isUserNameAvailable(String userName) {
+		if(userName == null || userName.trim().isEmpty()) {
+			throw new IllegalArgumentException("Username cannot be null or empty");
+		}
+		if(userName.length() < 3 || userName.length() > 20) {
+			throw new IllegalArgumentException("Username must be between 3 and 20 characters");
+		}
+		if(!userName.matches("^[a-zA-Z0-9_]+$")) {
+			throw new IllegalArgumentException("Username can only contain letters, numbers, and underscores");
+		}
 		return userRepository.findByUserName(userName).isEmpty();
 
 	}

@@ -45,28 +45,42 @@ const [usernameAvailable,setUsernameAvailable]=useState<boolean | null>(null)
 
 useEffect(()=>{
 
-if(!formData.userName || formData.userName.length<3){
+if(!formData.userName){
 setUsernameAvailable(null)
 return
 }
 
-const timer=setTimeout(async()=>{
+const timer = setTimeout(async()=>{
 
 try{
 
 setChecking(true)
 
-const res=await fetch(
+const res = await fetch(
 `${API_BASE}/auth/check-username?username=${formData.userName}`
 )
 
-const data=await res.json()
+const data = await res.json()
 
-setUsernameAvailable(data.available)
+if(!res.ok){
+
+setUsernameAvailable(false)
+
+handleFieldChange("userName",formData.userName)
+
+return
+
+}
+
+if(data.available){
+setUsernameAvailable(true)
+}else{
+setUsernameAvailable(false)
+}
 
 }catch{
 
-setUsernameAvailable(null)
+setUsernameAvailable(false)
 
 }finally{
 
@@ -74,11 +88,12 @@ setChecking(false)
 
 }
 
-},500)
+},400)
 
-return()=>clearTimeout(timer)
+return ()=>clearTimeout(timer)
 
 },[formData.userName])
+
 
 return(
 

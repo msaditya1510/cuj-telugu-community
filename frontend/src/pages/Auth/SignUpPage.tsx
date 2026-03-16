@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react"
+import { useEffect, useState } from "react"
 import { Layout } from "@/components/layout/Layout"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -13,7 +13,7 @@ type Step = 1 | 2 | 3
 
 const API_BASE = import.meta.env.VITE_API_URL
 
-export default function SignUpPage(){
+export default function SignUpPage() {
 
 useEffect(()=>{
 document.title="Sign Up | CUJ Telugu Community"
@@ -22,6 +22,11 @@ document.title="Sign Up | CUJ Telugu Community"
 const [step,setStep] = useState<Step>(1)
 const [loading,setLoading] = useState(false)
 const [photo,setPhoto] = useState<File | null>(null)
+
+/* NEW — username validation state */
+const [usernameStatus,setUsernameStatus] = useState<
+"idle" | "checking" | "valid" | "invalid"
+>("idle")
 
 const [formData,setFormData] = useState({
 
@@ -247,9 +252,23 @@ setLoading(false)
 function handleNext(){
 
 if(step===1){
+
+if(usernameStatus==="checking"){
+toast.error("Checking username availability, please wait")
+return
+}
+
+if(usernameStatus==="invalid"){
+toast.error("Please choose a valid username")
+scrollToField("userName")
+return
+}
+
 if(!validateStep1()) return
+
 setStep(2)
 return
+
 }
 
 if(step===2){
@@ -286,27 +305,24 @@ Fill the details below to create your account. Fields marked with * are required
 </div>
 
 <div className="flex justify-between text-sm">
-
 <div className={step>=1 ? "font-bold" : ""}>Personal</div>
 <div className={step>=2 ? "font-bold" : ""}>Academic</div>
 <div className={step===3 ? "font-bold" : ""}>Done</div>
-
 </div>
 
 <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-
-<div
-className="h-full bg-primary transition-all duration-500"
+<div className="h-full bg-primary transition-all duration-500"
 style={{ width: `${progress}%` }}
 />
-
 </div>
 
-{step===1 && ( <StepPersonal
+{step===1 && (
+<StepPersonal
 formData={formData}
 fieldErrors={fieldErrors}
 handleFieldChange={handleFieldChange}
 setPhoto={setPhoto}
+onUsernameStatusChange={setUsernameStatus}
 />
 )}
 
@@ -323,24 +339,24 @@ id="role"
 value={formData.role}
 onChange={(e)=>handleFieldChange("role",e.target.value)}
 className="border rounded p-2 w-full"
-
 >
-
 <option value="">Select role</option>
 <option value="STUDENT">Student</option>
 <option value="ALUMNI">Alumni</option>
 <option value="PROFESSOR">Professor</option>
-
 </select>
 
-{formData.role==="STUDENT" && <StepStudent formData={formData} handleFieldChange={handleFieldChange}/>
-}
+{formData.role==="STUDENT" && (
+<StepStudent formData={formData} handleFieldChange={handleFieldChange}/>
+)}
 
-{formData.role==="ALUMNI" && <StepAlumni formData={formData} handleFieldChange={handleFieldChange}/>
-}
+{formData.role==="ALUMNI" && (
+<StepAlumni formData={formData} handleFieldChange={handleFieldChange}/>
+)}
 
-{formData.role==="PROFESSOR" && <StepProfessor formData={formData} handleFieldChange={handleFieldChange}/>
-}
+{formData.role==="PROFESSOR" && (
+<StepProfessor formData={formData} handleFieldChange={handleFieldChange}/>
+)}
 
 </div>
 
@@ -364,13 +380,21 @@ Your account has been submitted for admin approval.
 
 <div className="flex flex-col md:flex-row gap-4 mt-6">
 
-{step===2 && <Button variant="outline" onClick={handleBack} className="w-full">
-Back </Button>
-}
+{step===2 && (
+<Button variant="outline" onClick={handleBack} className="w-full">
+Back
+</Button>
+)}
 
-{step<3 && <Button onClick={handleNext} disabled={loading} className="w-full">
-{loading ? "Submitting..." : step===2 ? "Submit" : "Next"} </Button>
-}
+{step<3 && (
+<Button
+onClick={handleNext}
+disabled={loading || usernameStatus==="invalid" || usernameStatus==="checking"}
+className="w-full"
+>
+{loading ? "Submitting..." : step===2 ? "Submit" : "Next"}
+</Button>
+)}
 
 </div>
 
