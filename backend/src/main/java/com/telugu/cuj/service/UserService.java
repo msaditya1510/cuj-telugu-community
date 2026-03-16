@@ -185,9 +185,9 @@ public class UserService {
 	public Map<String, Long> getUserStats() {
 		return Map.of(
 //				"totalUsers", (long) userRepository.findAll().size(),
-				"totalStudents", (long)userRepository.findUserByUserType(UserType.STUDENT).size(),
-				"totalProfessors", (long)userRepository.findUserByUserType(UserType.PROFESSOR).size(),
-				"totalAlumni", (long)userRepository.findUserByUserType(UserType.ALUMNI).size()
+				"totalStudents", (long)userRepository.findUserByUserTypeAndStatus(UserType.STUDENT,UserStatus.ACTIVE).size(),
+				"totalProfessors", (long)userRepository.findUserByUserTypeAndStatus(UserType.PROFESSOR,UserStatus.ACTIVE).size(),
+				"totalAlumni", (long)userRepository.findUserByUserTypeAndStatus(UserType.ALUMNI,UserStatus.ACTIVE).size()
 				//			            "pendingApprovals", userService.getPendingApprovalsCount()
 				);
 	}

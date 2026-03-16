@@ -28,6 +28,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	List<User> findUserByUserType(UserType type);
 
+	List<User> findUserByUserTypeAndStatus(UserType type,UserStatus status);
+
 	Page<User> findByStatus(UserStatus status,Pageable pageable);
 
 	boolean existsByName(String name);
