@@ -22,7 +22,6 @@ export const Footer = () => {
               </div>
               <div>
                 <div className="font-bold">CUJ Telugu Community</div>
-                <div className="text-xs text-muted-foreground">తెలుగు సమాజం</div>
               </div>
             </div>
             <p className="text-sm text-muted-foreground">
@@ -35,7 +34,7 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-2">Quick Links</h4>
             <div className="grid grid-cols-2 gap-2 text-sm">
-              {['Home', 'Events', 'Gallery', 'Contact-Cards'].map((l) => (
+              {['Home', 'Events', 'Gallery', 'Contacts'].map((l) => (
                 <Link
                   key={l}
                   to={l === 'Home' ? '/' : `/${l.toLowerCase()}`}
