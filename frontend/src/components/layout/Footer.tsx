@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Instagram, Youtube, Linkedin, MessageCircle } from 'lucide-react';
 
 const socialLinks = [
-  { icon: MessageCircle, href: 'https://wa.me/', label: 'WhatsApp' },
+  // { icon: MessageCircle, href: 'https://wa.me/', label: 'WhatsApp' },
   { icon: Instagram, href: 'https://www.instagram.com/cuj_telugu_community', label: 'Instagram' },
   // { icon: Linkedin, href: 'https://linkedin.com/', label: 'LinkedIn' },
   { icon: Youtube, href: 'https://www.youtube.com/@cujtelugucommunity', label: 'YouTube' },
@@ -35,7 +35,7 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-2">Quick Links</h4>
             <div className="grid grid-cols-2 gap-2 text-sm">
-              {['Home', 'Events', 'Gallery', 'Contact'].map((l) => (
+              {['Home', 'Events', 'Gallery', 'Contact-Cards'].map((l) => (
                 <Link
                   key={l}
                   to={l === 'Home' ? '/' : `/${l.toLowerCase()}`}
