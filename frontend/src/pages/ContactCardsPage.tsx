@@ -530,9 +530,9 @@ document.title = "Community Directory | CUJ Telugu Community"
                   className="h-12 px-4 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-slate-300 transition-colors min-w-[140px]"
                 >
                   <option value="">All roles</option>
-                  <option value="STUDENT">Student</option>
-                  <option value="PROFESSOR">Professor</option>
-                  <option value="ALUMNI">Alumni</option>
+                  <option value="STUDENT">STUDENT</option>
+                  <option value="PROFESSOR">PROFESSOR</option>
+                  <option value="ALUMNI">ALUMNI</option>
                 </select>
 
                 {hasActiveFilters && (
@@ -568,7 +568,7 @@ document.title = "Community Directory | CUJ Telugu Community"
                 )}
                 {type && (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-md">
-                    <span>Role: {type.toLowerCase()}</span>
+                    <span>Role: {type}</span>
                     <button onClick={() => setType("")} className="hover:text-slate-900">
                       <X size={14} />
                     </button>
