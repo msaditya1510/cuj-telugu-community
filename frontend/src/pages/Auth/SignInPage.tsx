@@ -1,5 +1,5 @@
 import { useEffect,useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useLocation,useNavigate } from "react-router-dom"
 import { Layout } from "@/components/layout/Layout"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -16,12 +16,20 @@ export default function SignInPage(){
 document.title = "Sign In Page | CUJ Telugu Community"
 },[])
 const navigate = useNavigate()
+const location = useLocation();
 
 const { loadUser,user } = useAuth()
 
 const [username,setUsername] = useState("")
 const [password,setPassword] = useState("")
 const [loading,setLoading] = useState(false)
+
+const fromLocation = location.state?.from;
+
+const from =
+  fromLocation
+    ? fromLocation.pathname + (fromLocation.search || "")
+    : null;
 
 async function handleLogin(){
 
@@ -48,10 +56,12 @@ const loggedUser = await loadUser()
 
 toast.success("Login successful")
 
-if(loggedUser?.role === "ADMIN"){
-navigate("/admin")
-}else{
-navigate("/")
+if (from) {
+  navigate(from, { replace: true });
+} else if (loggedUser?.role === "ADMIN") {
+  navigate("/admin", { replace: true });
+} else {
+  navigate("/", { replace: true });
 }
 
 }catch{
