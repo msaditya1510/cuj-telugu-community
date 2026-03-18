@@ -43,6 +43,8 @@ public class ContactCardController {
         	else if(name!=null&&department==null)
         		results.addAll(contactCardService.getAllApprovedUsersByRoleAndName(type,name));
         	
+			else if(name==null&&department!=null)
+				results.addAll(contactCardService.getAllApprovedUsersByRoleAndDepartment(type,department));
         	else
         		results.addAll(contactCardService.getAllApprovedUsersByRoleNameAndDepartment(type,name,department));
         } 

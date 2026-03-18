@@ -86,6 +86,24 @@ public class ContactCardService {
 		return users;
 	}
 
+	public List<ContactCardDTO> getAllApprovedUsersByRoleAndDepartment(UserType type, String department) {
+		List<ContactCardDTO> users=new ArrayList<>();
+		switch(type) {
+		case STUDENT ->
+		studentRepo.findByDepartmentAndStatus(department, UserStatus.ACTIVE)
+		.forEach(student->users.add(dtoMapper.toContactCardDTO(student)));
+		case PROFESSOR ->
+		professorRepo.findByDepartmentAndStatus(department, UserStatus.ACTIVE)
+		.forEach(prof->users.add(dtoMapper.toContactCardDTO(prof)));
+		case ALUMNI ->
+		alumniRepo.findByDepartmentAndStatus(department, UserStatus.ACTIVE)
+		.forEach(alumni->users.add(dtoMapper.toContactCardDTO(alumni)));
+		default->Collections.emptyList();
+		}
+		return users;
+
+	}
+	
 	public List<ContactCardDTO> getAllApprovedUsersByRoleNameAndDepartment(UserType type, String name,
 			String department) {
 		List<ContactCardDTO> users=new ArrayList<>();
