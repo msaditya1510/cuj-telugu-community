@@ -328,6 +328,7 @@ import { Layout } from "@/components/layout/Layout"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { 
   MapPin, 
   Search, 
@@ -365,6 +366,8 @@ const roleIcons = {
   DEFAULT: Building2
 }
 
+
+
 export default function ContactCardsPage() {
   useEffect(()=>{
 document.title = "Community Directory | CUJ Telugu Community"
@@ -376,6 +379,21 @@ document.title = "Community Directory | CUJ Telugu Community"
   const [type, setType] = useState("")
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  const location = useLocation()
+
+// Sync URL params → state
+useEffect(() => {
+  const params = new URLSearchParams(location.search)
+
+  const typeParam = params.get("type") || ""
+  const nameParam = params.get("name") || ""
+  const deptParam = params.get("department") || ""
+
+  setType(typeParam)
+  setName(nameParam)
+  setDepartment(deptParam)
+}, [location.search])
 
   // Clean avatar generator with better contrast
   const getAvatar = useCallback((user: UserCard) => {
@@ -418,10 +436,7 @@ document.title = "Community Directory | CUJ Telugu Community"
     }
   }, [name, department, type])
 
-  useEffect(() => {
-    fetchUsers()
-  }, [])
-
+  
   // Debounced search
   useEffect(() => {
     const delay = setTimeout(() => {
