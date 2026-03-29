@@ -25,8 +25,8 @@ interface GalleryImage {
 const sampleImages: GalleryImage[] = [
   {
     id: 1,
-    src: "gallery/ugadi-celebrations-2025.jpeg?w=1200&h=800&fit=crop",
-    title: "Ugadi Celebrations 2025",
+    src: "gallery/ugadi-2026-class.jpeg?w=1200&h=800&fit=crop",
+    title: "Ugadi Celebrations 2026",
     category: "Festival",
   },
   {
@@ -37,9 +37,9 @@ const sampleImages: GalleryImage[] = [
   },
   {
     id: 3,
-    src: "gallery/get-together-2025.png?w=1200&h=800&fit=crop",
-    title: "Get Together 2025",
-    category: "Meetup",
+    src: "gallery/ugadi-celebrations-2025.jpeg?w=1200&h=800&fit=crop",
+    title: "Ugadi Celebrations 2025",
+    category: "Festival",
   },
   // 
 ];
