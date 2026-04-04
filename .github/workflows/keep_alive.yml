@@ -12,5 +12,4 @@ jobs:
     steps:
       - name: Ping Space URL
         run: |
-          # Replace with your actual Hugging Face Space URL
           curl -I https://huggingface.co/spaces/msaditya1510/cujtelugucommunity
