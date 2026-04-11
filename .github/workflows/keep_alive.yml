@@ -12,4 +12,4 @@ jobs:
     steps:
       - name: Ping Space URL
         run: |
-          curl -I https://huggingface.co/spaces/msaditya1510/cujtelugucommunity
+          curl -I https://msaditya1510-cujtelugucommunity.hf.space
