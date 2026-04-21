@@ -1,70 +1,87 @@
 # CUJ Telugu Community
 
-A full-stack community platform for Telugu students, alumni, and faculty at the **Central University of Jharkhand (CUJ)**.  
-The platform helps members connect, discover each other, and celebrate shared culture through profiles, community directories, and event galleries.
+A full-stack community platform for Telugu students, alumni, and faculty at the Central University of Jharkhand (CUJ).  
+The platform enables users to connect, explore community members, and manage profiles through a centralized system.
 
 ---
 
-## 🌐 Features
+## Live Demo
 
-### Community Directory
-Browse and search members of the Telugu community at CUJ.
-
-### User Profiles
-Members can create and manage detailed profiles including:
-- Personal information
-- Department
-- Contact details
-- Social links
-- Skills and achievements
-
-### Role-Based Profiles
-Different profile structures for:
-- Students
-- Professors
-- Alumni
-
-### Photo Gallery
-A gallery showcasing campus photos, events, and community memories.
-
-### Search & Filters
-Users can filter community members by:
-- Name
-- Department
-- Role
-
-### Responsive Design
-Fully responsive UI optimized for desktop and mobile devices.
+Frontend: https://cuj-telugu-community.vercel.app  
+Backend API: [https://msaditya1510-cujtelugucommunity.hf.space ](https://msaditya1510-cujtelugucommunity.hf.space/) 
 
 ---
 
-## 🏗️ Tech Stack
+## Features
 
-### Frontend
+- Community directory with search functionality
+- User profile creation and management
+- Role-based profiles (students, professors, alumni)
+- Event listings (upcoming and past)
+- Contact card search and profile lookup
+- Responsive UI for desktop and mobile
+
+---
+
+## Tech Stack
+
+Frontend:
 - React
 - TypeScript
 - Vite
 - TailwindCSS
-- ShadCN UI
 
-### Backend
+Backend:
 - Spring Boot
 - Java
-- REST API
+- REST APIs
 - Hibernate / JPA
 
-### Database
-- MySQL / PostgreSQL (configurable)
+Database:
+- MySQL / PostgreSQL
 
-### Deployment
+Deployment:
 - Frontend: Vercel
-- Backend: Render / Railway
+- Backend: Hugging Face Spaces
 
 ---
 
-## 📂 Project Structure
+## System Design Overview
 
-```
+- Frontend communicates with backend using REST APIs
+- Backend follows layered architecture:
+  - Controller: handles HTTP requests and responses
+  - Service: contains business logic
+  - Repository: manages database interactions using JPA/Hibernate
+- Authentication-based endpoints use the currently logged-in user context
+- Database stores user profiles, events, and contact card data
+- Environment variables used for API endpoints and database configuration
+
+---
+
+## Sample API Endpoints
+
+User Profile:
+GET /api/users/me  
+PUT /api/users/me  
+
+Events:
+GET /api/events  
+GET /api/events/{id}  
+GET /api/events/upcoming  
+GET /api/events/past  
+
+Contact Cards:
+GET /api/contact-cards/search  
+GET /api/contact-cards/profile/{id}  
+
+Public:
+GET /api/public/stats  
+
+---
+
+## Project Structure
+
 frontend/
   src/
     components/
@@ -78,100 +95,59 @@ backend/
     repository/
     entity/
     dto/
-```
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
-### Clone the repository
+Clone the repository:
+git clone https://github.com/msaditya1510/cuj-telugu-community.git  
+cd cuj-telugu-community  
 
-```
-git clone https://github.com/YOUR_USERNAME/cuj-telugu-community.git
-cd cuj-telugu-community
-```
+Frontend:
+npm install  
+npm run dev  
 
----
-
-## Frontend Setup
-
-Install dependencies
-
-```
-npm install
-```
-
-Run development server
-
-```
-npm run dev
-```
-
-Build for production
-
-```
-npm run build
-```
+Backend:
+./mvnw spring-boot:run  
 
 ---
 
-## Backend Setup
+## Environment Variables
 
-Run Spring Boot application
+Frontend (.env):
+VITE_API_URL=http://localhost:8080  
 
-```
-./mvnw spring-boot:run
-```
-
-or
-
-```
-mvn spring-boot:run
-```
+Backend (application.properties):
+spring.datasource.url=YOUR_DATABASE_URL  
+spring.datasource.username=USERNAME  
+spring.datasource.password=PASSWORD  
 
 ---
 
-## ⚙️ Environment Variables
+## Testing
 
-Frontend `.env`
-
-```
-VITE_API_URL=http://localhost:8080
-```
-
-Backend `application.properties`
-
-```
-spring.datasource.url=YOUR_DATABASE_URL
-spring.datasource.username=USERNAME
-spring.datasource.password=PASSWORD
-```
+- Unit tests are being implemented using JUnit  
+- Focus on validating API endpoints and core business logic  
 
 ---
 
-## 📸 Gallery
+## Deployment
 
-The gallery showcases campus images and community memories of the **Central University of Jharkhand**.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome.
-
-1. Fork the repository
-2. Create a new branch
-3. Make changes
-4. Submit a pull request
+- Frontend deployed on Vercel  
+- Backend deployed on Hugging Face Spaces  
+- Environment variables configured for API endpoints and database connections  
 
 ---
 
-## 📜 License
+## Notes
 
-This project is created for the **CUJ Telugu Community** and is intended for community use.
+- Backend hosted on Hugging Face Spaces may experience cold starts depending on usage  
+- This project demonstrates backend architecture, API design, and deployment workflow
+- Configured a scheduled GitHub Actions workflow to periodically ping the backend service to reduce cold-start latency 
 
 ---
 
-## 👨‍💻 Author
+## Author
 
-Developed for the **CUJ Telugu Community**.
+Developed for the CUJ Telugu Community
